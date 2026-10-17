@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunia Gaming: ML, PUBG & Roblox</title>
+    <style>
+        /* ===== RESET & VARIABEL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5a4bd1;
+            --secondary: #00cec9;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --darker: #1e272e;
+            --light: #f5f6fa;
+            --gray: #636e72;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            color: var(--dark);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER UTAMA ===== */
+        header.hero {
+            background: linear-gradient(135deg, rgba(108,92,231,0.95), rgba(0,206,201,0.85)),
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1600') center/cover;
+            color: white;
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header.hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
+            background-size: 100px 100px;
+            opacity: 0.5;
+        }
+
+        header.hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+
+        header.hero p {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            opacity: 0.95;
+            position: relative;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-top: 25px;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 30px;
+        }
+
+        @media (max-width: 968px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== FOTO KEGIATAN ===== */
+        .activity-photo {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .activity-photo img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .activity-photo:hover img {
+            transform: scale(1.03);
+        }
+
+        .activity-photo .caption {
+            padding: 20px 25px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* ===== NAVIGASI GAME ===== */
+        .game-nav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.1s ease;
+        }
+
+        .game-nav button {
+            flex: 1;
+            min-width: 140px;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 12px;
+            background: var(--card-bg);
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .game-nav button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .game-nav button.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 8px 25px rgba(108,92,231,0.4);
+        }
+
+        /* ===== KONTEN GAME ===== */
+        .game-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .game-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 35px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .content-card h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+        }
+
+        .content-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin: 25px 0 12px;
+        }
+
+        .content-card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content-card ul, .content-card ol {
+            margin: 15px 0 15px 25px;
+            color: var(--gray);
+        }
+
+        .content-card li {
+            margin-bottom: 8px;
+        }
+
+        /* Gambar dalam konten */
+        .content-img {
+            width: 100%;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .content-img:hover {
+            transform: scale(1.01);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .img-caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-style: italic;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        /* Tombol Detail / Accordion */
+        .detail-toggle {
+            width: 100%;
+            padding: 18px 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            transition: var(--transition);
+        }
+
+        .detail-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108,92,231,0.3);
+        }
+
+        .detail-toggle .arrow {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .detail-toggle.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        .detail-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease, padding 0.3s ease;
+            background: #f8f9ff;
+            border-radius: 0 0 12px 12px;
+            padding: 0 25px;
+        }
+
+        .detail-content.open {
+            max-height: 3000px;
+            padding: 25px;
+            margin-bottom: 15px;
+        }
+
+        .detail-content p {
+            margin-bottom: 12px;
+        }
+
+        .source-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 18px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .source-link:hover {
+            background: #e84393;
+            transform: translateY(-2px);
+        }
+
+        /* ===== REAKSI ===== */
+        .reactions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 12px;
+        }
+
+        .reaction-btn {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reaction-btn:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .reaction-btn.reacted {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .reaction-count {
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /* ===== KOMENTAR ===== */
+        .comments-section {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 35px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        .comments-section h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            resize: vertical;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
+        }
+
+        .comment-form button {
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .comment-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108,92,231,0.3);
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .comment-body .comment-name {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .comment-body .comment-time {
+            font-size: 0.8rem;
+            color: #b2bec3;
+            margin-bottom: 8px;
+        }
+
+        .comment-body .comment-text {
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        .comment-actions span {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .comment-actions span:hover {
+            color: var(--accent);
+        }
+
+        /* ===== SIDEBAR ===== */
+        aside.sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .sidebar-widget {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .sidebar-widget h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+        }
+
+        .sidebar-widget p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .sidebar-widget ul {
+            list-style: none;
+        }
+
+        .sidebar-widget li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .sidebar-widget li:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .sidebar-widget li:last-child {
+            border-bottom: none;
+        }
+
+        .profile-widget {
+            text-align: center;
+        }
+
+        .profile-widget .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(108,92,231,0.3);
+        }
+
+        .profile-widget h4 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .profile-widget .role {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag-cloud span {
+            padding: 6px 14px;
+            background: #f0f0ff;
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tag-cloud span:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--darker);
+            color: #b2bec3;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+
+        footer .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        footer .copyright {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            color: #636e72;
+        }
+
+        /* ===== SCROLL TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(108,92,231,0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header.hero h1 {
+                font-size: 2rem;
+            }
+            header.hero p {
+                font-size: 1rem;
+            }
+            .content-card {
+                padding: 20px;
+            }
+            .game-nav button {
+                min-width: 100px;
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+            .activity-photo img {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER UTAMA ===== -->
+    <header class="hero">
+        <h1>🎮 Dunia Gaming Saya</h1>
+        <p>Mobile Legends, PUBG Mobile & Roblox — Hobi, Komunitas & Keseruan</p>
+        <div class="hero-badge">✨ Blog Hobi Gaming Pribadi ✨</div>
+    </header>
+
+    <div class="container">
+        <!-- ===== FOTO KEGIATAN ===== -->
+        <div class="activity-photo">
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1200" alt="Bermain game online">
+            <div class="caption">📸 Momen seru bermain game online bersama teman-teman — setup gaming sederhana, tapi keseruannya maksimal!</div>
+        </div>
+
+        <div class="layout">
+            <!-- ===== KONTEN UTAMA ===== -->
+            <main>
+                <!-- Navigasi Game -->
+                <nav class="game-nav">
+                    <button class="active" onclick="showGame('ml', this)">⚔️ Mobile Legends</button>
+                    <button onclick="showGame('pubg', this)">🔫 PUBG Mobile</button>
+                    <button onclick="showGame('roblox', this)">🧱 Roblox</button>
+                </nav>
+
+                <!-- ===== MOBILE LEGENDS ===== -->
+                <div id="ml" class="game-content active">
+                    <div class="content-card">
+                        <h2>⚔️ Mobile Legends: Bang Bang</h2>
+                        <p>Mobile Legends adalah game MOBA (Multiplayer Online Battle Arena) mobile yang mempertemukan dua tim berisi 5 pemain untuk bertarung di landasan 3 jalur. Tujuan utamanya adalah menghancurkan basis musuh sambil mempertahankan basis sendiri. Game ini sangat populer di Indonesia dan menjadi salah satu esports mobile terbesar.</p>
+                        <img class="content-img" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1000" alt="Mobile Legends">
+                        <div class="img-caption">Ilustrasi pertempuran MOBA 5v5 yang seru dan kompetitif</div>
+
+                        <h3>🎯 Isi di Dalam Game</h3>
+                        <p>Di dalam Mobile Legends, pemain memilih satu dari puluhan hero dengan peran berbeda: Tank, Fighter, Assassin, Mage, Marksman, dan Support. Setiap hero memiliki skill unik yang bisa dikombinasikan dengan item. Pertandingan berlangsung sekitar 10-20 menit dengan sistem rank dari Warrior hingga Mythical Glory.</p>
+                        <ul>
+                            <li><strong>Hero & Skin:</strong> Ratusan hero dengan skin keren yang bisa dikoleksi.</li>
+                            <li><strong>Ranked Mode:</strong> Sistem peringkat kompetitif dari Warrior sampai Mythic.</li>
+                            <li><strong>Draft Pick:</strong> Mode pemilihan hero bergantian dengan ban.</li>
+                            <li><strong>Item Build:</strong> Strategi membeli item sesuai situasi pertandingan.</li>
+                            <li><strong>Emblem & Talent:</strong> Kustomisasi statistik hero.</li>
+                        </ul>
+
+                        <h3>✨ Fitur yang Menyenangkan</h3>
+                        <p>Yang membuat Mobile Legends seru adalah kombinasi kerja sama tim, strategi, dan momen-momen epik seperti savage, maniac, dan comeback kemenangan. Fitur-fitur seperti voice chat, quick chat, dan sistem emote membuat komunikasi antar pemain lebih hidup. Selain itu, event musiman, battle pass, dan turnamen esports membuat game ini selalu punya daya tarik baru.</p>
+
+                        <!-- Accordion Detail -->
+                        <button class="detail-toggle" onclick="toggleDetail(this)">
+                            <span>📖 Klik untuk Penjelasan Lengkap: Strategi, Hero Favorit & Komunitas</span>
+                            <span class="arrow">▼</span>
+                        </button>
+                        <div class="detail-content">
+                            <p><strong>Strategi Dasar Mobile Legends:</strong> Memahami rotasi, map awareness, dan timing objective seperti Turtle dan Lord adalah kunci. Pemain juga perlu belajar last-hit minion untuk gold maksimal, serta zoning area agar tim bisa mengambil objective dengan aman. Komunikasi lewat quick chat "Gank mid!" atau "Gather!" sangat membantu.</p>
+                            <p><strong>Hero Favorit Saya:</strong> Saya sering memakai Gusion sebagai assassin karena burst damage-nya tinggi, serta Angela sebagai support yang bisa membantu teman dari jarak jauh. Untuk tank, Khufra menjadi pilihan karena crowd control-nya kuat. Setiap hero punya curve belajar yang berbeda, dan itu yang membuat game ini tidak membosankan.</p>
+                            <p><strong>Komunitas & Esports:</strong> Mobile Legends memiliki komunitas besar di Indonesia, dengan turnamen seperti MPL (Mobile Legends Professional League) yang selalu ditonton jutaan orang. Saya sendiri sering menonton live streaming pertandingan MPL untuk belajar strategi dari pro player. Bergabung dengan squad atau komunitas Discord juga menambah keseruan bermain.</p>
+                            <p><strong>Tips Meningkatkan Rank:</strong> Fokus pada satu atau dua hero, pelajari matchup, jangan toxic, dan selalu review replay pertandingan. Konsistensi bermain dan mental yang kuat lebih penting daripada sekadar mekanik. Mainkan ranked saat kondisi fit agar performa maksimal.</p>
+                            <img class="content-img" src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=1000" alt="Esports MOBA">
+                            <div class="img-caption">Suasana turnamen esports MOBA yang kompetitif</div>
+                            <a href="https://www.mobilelegends.com/" target="_blank" class="source-link">🔗 Sumber: Situs Resmi Mobile Legends</a>
+                        </div>
+                    </div>
+
+                    <!-- Reaksi -->
+                    <div class="content-card">
+                        <h3>💬 Reaksi Pembaca</h3>
+                        <div class="reactions">
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>❤️</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>🔥</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>😂</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>👏</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>🎮</span> <span class="reaction-count">0</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Komentar -->
+                    <div class="comments-section">
+                        <h3>🗨️ Komentar (2)</h3>
+                        <form class="comment-form" onsubmit="addComment(event, 'ml-comments')">
+                            <input type="text" placeholder="Nama kamu..." required>
+                            <textarea rows="3" placeholder="Tulis komentar tentang Mobile Legends..." required></textarea>
+                            <button type="submit">Kirim Komentar</button>
+                        </form>
+                        <div id="ml-comments">
+                            <div class="comment-item">
+                                <div class="comment-avatar">A</div>
+                                <div class="comment-body">
+                                    <div class="comment-name">Andi Gamer</div>
+                                    <div class="comment-time">2 jam lalu</div>
+                                    <div class="comment-text">Gusion emang juara! Burst damage-nya bikin musuh kabur. Nice artikel, bro!</div>
+                                    <div class="comment-actions"><span>❤️ 12</span> <span>Balas</span></div>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="comment-avatar">S</div>
+                                <div class="comment-body">
+                                    <div class="comment-name">Sinta ML</div>
+                                    <div class="comment-time">5 jam lalu</div>
+                                    <div class="comment-text">Aku main Angela, suka banget bisa bantu teman dari jauh. Semangat push rank!</div>
+                                    <div class="comment-actions"><span>❤️ 8</span> <span>Balas</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== PUBG MOBILE ===== -->
+                <div id="pubg" class="game-content">
+                    <div class="content-card">
+                        <h2>🔫 PUBG Mobile</h2>
+                        <p>PUBG Mobile (PlayerUnknown's Battlegrounds Mobile) adalah game battle royale di mana 100 pemain terjun payung ke sebuah pulau, mencari senjata dan perlengkapan, lalu bertarung hingga tersisa satu pemain atau tim. Game ini menuntut strategi, refleks, dan kerja sama tim yang solid.</p>
+                        <img class="content-img" src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=1000" alt="PUBG Mobile">
+                        <div class="img-caption">Aksi battle royale yang menegangkan di medan pertempuran</div>
+
+                        <h3>🎯 Isi di Dalam Game</h3>
+                        <p>Di dalam PUBG Mobile, pemain memilih mode solo, duo, atau squad. Setiap match dimulai dengan terjun ke map seperti Erangel, Miramar, Sanhok, atau Livik. Pemain harus mencari loot berupa senjata, armor, helm, medkit, dan kendaraan. Zona biru yang mengecil memaksa pemain bergerak dan bertemu lawan.</p>
+                        <ul>
+                            <li><strong>Berbagai Map:</strong> Erangel, Miramar, Sanhok, Livik, Karakin, dan lainnya.</li>
+                            <li><strong>Senjata Lengkap:</strong> Dari M416, AKM, Kar98k, hingga AWM.</li>
+                            <li><strong>Kendaraan:</strong> Motor, mobil, buggy, perahu, dan helikopter.</li>
+                            <li><strong>Mode Klasik & Arena:</strong> Battle royale dan deathmatch cepat.</li>
+                            <li><strong>Sistem Rank:</strong> Bronze hingga Conqueror.</li>
+                        </ul>
+
+                        <h3>✨ Fitur yang Menyenangkan</h3>
+                        <p>Fitur voice chat memudahkan koordinasi tim saat push atau bertahan. Sistem ping dan quick chat membantu komunikasi tanpa suara. Event kolaborasi dengan anime atau film populer juga sering menghadirkan skin dan mode baru yang seru. Yang paling menegangkan tentu saja momen clutch 1v4 atau comeback dari zona biru tipis.</p>
+
+                        <button class="detail-toggle" onclick="toggleDetail(this)">
+                            <span>📖 Klik untuk Penjelasan Lengkap: Taktik, Loadout & Momen Seru</span>
+                            <span class="arrow">▼</span>
+                        </button>
+                        <div class="detail-content">
+                            <p><strong>Taktik Dasar:</strong> Memilih lokasi drop yang strategis, mengatur rotasi aman, dan memanfaatkan cover sangat penting. Mendengar suara langkah kaki dan tembakan bisa memberi informasi posisi musuh. Bermain safe zone dan menjaga bahan bakar kendaraan juga tak boleh diabaikan.</p>
+                            <p><strong>Loadout Favorit:</strong> Saya biasanya memakai M416 dengan scope 4x untuk jarak menengah, dipadukan dengan Kar98k untuk sniper. Untuk senjata jarak dekat, UZI atau Vector sangat efektif. Selalu bawa smoke grenade untuk revive teman dan frag grenade untuk push.</p>
+                            <p><strong>Momen Seru:</strong> Salah satu momen paling seru adalah saat clutch 1v4 di final circle. Jantung berdebar, tangan berkeringat, tapi ketika menang rasanya luar biasa. Momen revive teman di tengah tembakan musuh juga jadi cerita yang tak terlupakan.</p>
+                            <p><strong>Komunitas:</strong> Komunitas PUBG Mobile Indonesia sangat besar, dengan banyak turnamen seperti PMPL (PUBG Mobile Pro League). Saya sering menonton streamer untuk belajar teknik baru dan ikut serta dalam komunitas Discord untuk mencari teman mabar.</p>
+                            <img class="content-img" src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=1000" alt="Battle Royale Gaming">
+                            <div class="img-caption">Ketegangan battle royale di final circle</div>
+                            <a href="https://www.pubgmobile.com/" target="_blank" class="source-link">🔗 Sumber: Situs Resmi PUBG Mobile</a>
+                        </div>
+                    </div>
+
+                    <!-- Reaksi -->
+                    <div class="content-card">
+                        <h3>💬 Reaksi Pembaca</h3>
+                        <div class="reactions">
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>❤️</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>🔥</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>😂</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>👏</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>🎮</span> <span class="reaction-count">0</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Komentar -->
+                    <div class="comments-section">
+                        <h3>🗨️ Komentar (1)</h3>
+                        <form class="comment-form" onsubmit="addComment(event, 'pubg-comments')">
+                            <input type="text" placeholder="Nama kamu..." required>
+                            <textarea rows="3" placeholder="Tulis komentar tentang PUBG Mobile..." required></textarea>
+                            <button type="submit">Kirim Komentar</button>
+                        </form>
+                        <div id="pubg-comments">
+                            <div class="comment-item">
+                                <div class="comment-avatar">R</div>
+                                <div class="comment-body">
+                                    <div class="comment-name">Rian Sniper</div>
+                                    <div class="comment-time">1 hari lalu</div>
+                                    <div class="comment-text">Kar98k emang senjata wajib buat sniper! Suka banget momen headshot dari jauh.</div>
+                                    <div class="comment-actions"><span>❤️ 5</span> <span>Balas</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== ROBLOX ===== -->
+                <div id="roblox" class="game-content">
+                    <div class="content-card">
+                        <h2>🧱 Roblox</h2>
+                        <p>Roblox adalah platform game online di mana pengguna dapat membuat dan memainkan game yang dibuat oleh pengguna lain. Dengan jutaan game yang tersedia, mulai dari petualangan, simulasi, hingga obby (obstacle course), Roblox menawarkan kebebasan kreativitas tanpa batas.</p>
+                        <img class="content-img" src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=1000" alt="Roblox">
+                        <div class="img-caption">Dunia kreatif Roblox dengan beragam game buatan pengguna</div>
+
+                        <h3>🎯 Isi di Dalam Game</h3>
+                        <p>Di Roblox, pemain bisa menjelajahi berbagai pengalaman (experience) seperti Adopt Me, Brookhaven, Arsenal, Blox Fruits, dan masih banyak lagi. Setiap game memiliki mekanik dan tujuan berbeda. Pemain juga bisa mengkustomisasi avatar dengan pakaian dan aksesori, serta berinteraksi dengan pemain lain dari seluruh dunia.</p>
+                        <ul>
+                            <li><strong>Jutaan Game:</strong> Dari obby, roleplay, hingga simulasi.</li>
+                            <li><strong>Kustomisasi Avatar:</strong> Pakaian, aksesori, dan animasi.</li>
+                            <li><strong>Robux:</strong> Mata uang untuk membeli item premium.</li>
+                            <li><strong>Roblox Studio:</strong> Alat untuk membuat game sendiri.</li>
+                            <li><strong>Komunitas Global:</strong> Bermain dengan orang dari berbagai negara.</li>
+                        </ul>
+
+                        <h3>✨ Fitur yang Menyenangkan</h3>
+                        <p>Yang membuat Roblox seru adalah kebebasan berekspresi. Kita bisa menjadi apa saja, dari petualang hingga pemilik kafe. Fitur chat dan emote membuat interaksi sosial terasa hidup. Selain itu, event musiman seperti Roblox Egg Hunt dan kolaborasi dengan brand terkenal selalu dinantikan.</p>
+
+                        <button class="detail-toggle" onclick="toggleDetail(this)">
+                            <span>📖 Klik untuk Penjelasan Lengkap: Game Favorit, Kreativitas & Sosial</span>
+                            <span class="arrow">▼</span>
+                        </button>
+                        <div class="detail-content">
+                            <p><strong>Game Favorit Saya:</strong> Saya sering bermain Blox Fruits untuk sensasi petualangan ala anime, Brookhaven untuk roleplay santai, dan Arsenal untuk latihan aim. Setiap game punya komunitas dan vibe yang berbeda, jadi tidak pernah bosan.</p>
+                            <p><strong>Kreativitas Tanpa Batas:</strong> Roblox Studio memungkinkan siapa saja membuat game sendiri. Saya pernah mencoba membuat obby sederhana dan belajar dasar scripting. Rasanya puas ketika teman-teman bisa memainkan game buatan sendiri.</p>
+                            <p><strong>Interaksi Sosial:</strong> Di Roblox, bertemu teman baru dari berbagai negara adalah hal biasa. Kita bisa ngobrol lewat chat, bermain bersama, atau sekadar jalan-jalan di dunia virtual. Namun tetap harus berhati-hati dan menjaga privasi.</p>
+                            <p><strong>Tips Bermain Aman:</strong> Gunakan fitur privasi, jangan membagikan informasi pribadi, dan laporkan perilaku tidak menyenangkan. Roblox memiliki sistem moderasi, tapi kewaspadaan pengguna tetap penting.</p>
+                            <img class="content-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1000" alt="Roblox Creative">
+                            <div class="img-caption">Kreativitas tanpa batas di Roblox Studio</div>
+                            <a href="https://www.roblox.com/" target="_blank" class="source-link">🔗 Sumber: Situs Resmi Roblox</a>
+                        </div>
+                    </div>
+
+                    <!-- Reaksi -->
+                    <div class="content-card">
+                        <h3>💬 Reaksi Pembaca</h3>
+                        <div class="reactions">
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>❤️</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>🔥</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>😂</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>👏</span> <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" onclick="react(this)">
+                                <span>🎮</span> <span class="reaction-count">0</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Komentar -->
+                    <div class="comments-section">
+                        <h3>🗨️ Komentar (1)</h3>
+                        <form class="comment-form" onsubmit="addComment(event, 'roblox-comments')">
+                            <input type="text" placeholder="Nama kamu..." required>
+                            <textarea rows="3" placeholder="Tulis komentar tentang Roblox..." required></textarea>
+                            <button type="submit">Kirim Komentar</button>
+                        </form>
+                        <div id="roblox-comments">
+                            <div class="comment-item">
+                                <div class="comment-avatar">B</div>
+                                <div class="comment-body">
+                                    <div class="comment-name">Budi Robloxian</div>
+                                    <div class="comment-time">3 hari lalu</div>
+                                    <div class="comment-text">Blox Fruits seru banget! Grinding level sambil sailing bareng teman tuh nagih.</div>
+                                    <div class="comment-actions"><span>❤️ 7</span> <span>Balas</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- ===== SIDEBAR ===== -->
+            <aside class="sidebar">
+                <div class="sidebar-widget profile-widget">
+                    <div class="avatar">🎮</div>
+                    <h4>Gamer Sejati</h4>
+                    <div class="role">Mobile Legends • PUBG • Roblox</div>
+                    <p style="margin-top: 10px;">Berbagi cerita dan tips seputar game online favorit. Selamat membaca!</p>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3>🔥 Game Populer</h3>
+                    <ul>
+                        <li>⚔️ Mobile Legends — MOBA 5v5</li>
+                        <li>🔫 PUBG Mobile — Battle Royale</li>
+                        <li>🧱 Roblox — Platform Kreatif</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3>🏷️ Tag</h3>
+                    <div class="tag-cloud">
+                        <span>MOBA</span>
+                        <span>Battle Royale</span>
+                        <span>Roblox</span>
+                        <span>Esports</span>
+                        <span>Gaming</span>
+                        <span>Mobile</span>
+                        <span>Tips</span>
+                        <span>Komunitas</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3>💡 Fun Fact</h3>
+                    <p>Mobile Legends memiliki lebih dari 1 miliar unduhan di seluruh dunia. PUBG Mobile menjadi salah satu game battle royale mobile paling populer. Roblox memiliki lebih dari 40 juta game yang dibuat pengguna!</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-logo">🎮 Dunia Gaming Saya</div>
+        <p>Blog hobi gaming: Mobile Legends, PUBG Mobile & Roblox</p>
+        <p>Dibuat dengan ❤️ untuk berbagi keseruan bermain game</p>
+        <div class="copyright">
+            &copy; 2025 Dunia Gaming Saya. Seluruh hak cipta dilindungi.<br>
+            Gambar hanya ilustrasi. Sumber informasi dari situs resmi masing-masing game.
+        </div>
+    </footer>
+
+    <!-- Tombol Scroll Top -->
+    <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Navigasi game
+        function showGame(gameId, btn) {
+            // Sembunyikan semua konten game
+            document.querySelectorAll('.game-content').forEach(el => el.classList.remove('active'));
+            // Tampilkan yang dipilih
+            document.getElementById(gameId).classList.add('active');
+            // Update tombol aktif
+            document.querySelectorAll('.game-nav button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        // Accordion detail
+        function toggleDetail(btn) {
+            btn.classList.toggle('open');
+            const content = btn.nextElementSibling;
+            content.classList.toggle('open');
+        }
+
+        // Reaksi
+        function react(btn) {
+            const countEl = btn.querySelector('.reaction-count');
+            let count = parseInt(countEl.textContent);
+            if (btn.classList.contains('reacted')) {
+                count--;
+                btn.classList.remove('reacted');
+            } else {
+                count++;
+                btn.classList.add('reacted');
+            }
+            countEl.textContent = count;
+        }
+
+        // Tambah komentar
+        function addComment(event, containerId) {
+            event.preventDefault();
+            const form = event.target;
+            const nameInput = form.querySelector('input');
+            const textInput = form.querySelector('textarea');
+            const name = nameInput.value.trim();
+            const text = textInput.value.trim();
+            if (!name || !text) return;
+
+            const container = document.getElementById(containerId);
+            const comment = document.createElement('div');
+            comment.className = 'comment-item';
+            comment.innerHTML = `
+                <div class="comment-avatar">${name.charAt(0).toUpperCase()}</div>
+                <div class="comment-body">
+                    <div class="comment-name">${escapeHtml(name)}</div>
+                    <div class="comment-time">Baru saja</div>
+                    <div class="comment-text">${escapeHtml(text)}</div>
+                    <div class="comment-actions"><span>❤️ 0</span> <span>Balas</span></div>
+                </div>
+            `;
+            container.prepend(comment);
+            form.reset();
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // Scroll top button
+        window.addEventListener('scroll', function() {
+            const btn = document.querySelector('.scroll-top');
+            if (window.scrollY > 300) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
